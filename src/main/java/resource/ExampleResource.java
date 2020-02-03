@@ -4,15 +4,20 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
-@Path("/")
+@Path("/resume")
 public class ExampleResource {
 
   @GET
-  @Path(value = "/")
   @Produces("application/json")
   public Response getSingleResume() {
-    Resume resume = new Resume("Тестовое резюме");
-    return Response.ok(resume).build();
+    List<Resume> resumes = List.of(
+        new Resume("Java программист"),
+        new Resume("Python developer"),
+        new Resume("Js developer"),
+        new Resume("Водитель самоката")
+    );
+    return Response.ok(resumes).build();
   }
 }

@@ -17,6 +17,7 @@ public class Resume {
 
   private String title;
 
+  @JsonIgnore
   private LocalDate dateCreate;
 
   public String getTitle() {

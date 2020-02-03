@@ -11,7 +11,7 @@ public class ExampleResource {
   @GET
   @Path(value = "/")
   @Produces("application/json")
-  public Response get() {
+  public Response getSingleResume() {
     Resume resume = new Resume("Тестовое резюме");
     return Response.ok(resume).build();
   }

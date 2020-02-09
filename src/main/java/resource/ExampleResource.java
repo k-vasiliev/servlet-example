@@ -23,15 +23,22 @@ import java.util.stream.Collectors;
 @Path("/resume")
 public class ExampleResource {
 
+  private final ResumeService resumeService;
+  private final ResumeDao resumeDao;
+  private final ResumeMapper resumeMapper;
+
+  public ExampleResource(ResumeService resumeService, ResumeDao resumeDao, ResumeMapper resumeMapper) {
+    this.resumeService = resumeService;
+    this.resumeDao = resumeDao;
+    this.resumeMapper = resumeMapper;
+  }
+
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResumes(@QueryParam(value = "limit") Integer limit) {
     if (limit == null || limit < 1) {
       throw new IllegalArgumentException("Limit is not present");
     }
-
-    ResumeDao resumeDao = new ResumeDao();
-    ResumeMapper resumeMapper = new ResumeMapper();
     List<ResumeEntity> resumes = resumeDao.getResumes(limit);
     List<ResumeDto> resumesDto = resumes.stream().map(resumeMapper::map).collect(Collectors.toList());
 
@@ -42,8 +49,6 @@ public class ExampleResource {
   @Path(value = "/{resumeId}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResumeById(@PathParam(value = "resumeId") Integer resumeId) {
-    ResumeDao resumeDao = new ResumeDao();
-    ResumeMapper resumeMapper = new ResumeMapper();
     ResumeEntity resume = resumeDao.getResume(resumeId).orElseThrow(NotFoundException::new);
     return Response.ok(resumeMapper.map(resume)).build();
   }
@@ -52,7 +57,6 @@ public class ExampleResource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response createResume() {
-    ResumeDao resumeDao = new ResumeDao();
     Integer resumeId = resumeDao.save(new ResumeEntity("Resume title " + UUID.randomUUID().toString()));
 
     return Response.ok(resumeId).build();
@@ -61,7 +65,6 @@ public class ExampleResource {
   @POST
   @Path(value = "/{resumeId}/archive")
   public Response archiveResume(@PathParam(value = "resumeId") Integer resumeId) {
-    ResumeService resumeService = new ResumeService();
     resumeService.archiveResume(resumeId);
 
     return Response.ok().build();

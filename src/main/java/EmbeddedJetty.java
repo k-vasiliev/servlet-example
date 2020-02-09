@@ -2,6 +2,9 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import service.ResumeService;
 
 public class EmbeddedJetty {
 
@@ -11,6 +14,9 @@ public class EmbeddedJetty {
     // config resources, jersey servlet
     ServletContextHandler ctx = new ServletContextHandler();
 
+    var applicationContext = new AnnotationConfigWebApplicationContext();
+    applicationContext.scan("config", "dao", "resource", "service");
+    ctx.addEventListener(new ContextLoaderListener(applicationContext));
     server.setHandler(ctx);
 
     ServletHolder servletHolder = ctx.addServlet(ServletContainer.class, "/*");

@@ -6,6 +6,7 @@ import entity.ResumeEntity;
 import service.ResumeMapper;
 import service.ResumeService;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -27,6 +28,7 @@ public class ExampleResource {
   private final ResumeDao resumeDao;
   private final ResumeMapper resumeMapper;
 
+  @Inject
   public ExampleResource(ResumeService resumeService, ResumeDao resumeDao, ResumeMapper resumeMapper) {
     this.resumeService = resumeService;
     this.resumeDao = resumeDao;

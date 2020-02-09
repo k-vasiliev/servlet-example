@@ -4,10 +4,12 @@ import dao.ResumeDao;
 import dao.UserDao;
 import entity.ResumeEntity;
 import entity.UserEntity;
+import org.springframework.stereotype.Service;
 import service.notifier.ResumeNotifier;
 
 import javax.ws.rs.NotFoundException;
 
+@Service
 public class ResumeService {
 
   private final ResumeDao resumeDao;

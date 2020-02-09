@@ -1,5 +1,8 @@
 package service.notifier;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class RabbitNotifier implements ResumeNotifier {
 
   @Override

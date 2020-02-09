@@ -2,7 +2,9 @@ package service;
 
 import dto.ResumeDto;
 import entity.ResumeEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ResumeMapper {
 
   public ResumeDto map(ResumeEntity resumeEntity) {

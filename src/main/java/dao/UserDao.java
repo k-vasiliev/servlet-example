@@ -3,10 +3,12 @@ package dao;
 import entity.UserEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import util.DatabaseUtil;
 
 import java.util.Optional;
 
+@Repository
 public class UserDao {
 
   public Optional<UserEntity> getUser(Integer userId) {

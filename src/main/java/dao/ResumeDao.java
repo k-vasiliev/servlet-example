@@ -3,11 +3,13 @@ package dao;
 import entity.ResumeEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import util.DatabaseUtil;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ResumeDao {
 
   public List<ResumeEntity> getResumes(Integer limit) {

@@ -4,7 +4,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import service.ResumeService;
 
 public class EmbeddedJetty {
 

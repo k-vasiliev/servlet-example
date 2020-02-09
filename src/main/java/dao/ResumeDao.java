@@ -40,7 +40,7 @@ public class ResumeDao {
   public Integer save(ResumeEntity resumeEntity) {
     Session session = getSessionFactory().getCurrentSession();
     session.beginTransaction();
-    session.saveOrUpdate(resumeEntity);
+    session.save(resumeEntity);
     session.getTransaction().commit();
     return resumeEntity.getId();
   }

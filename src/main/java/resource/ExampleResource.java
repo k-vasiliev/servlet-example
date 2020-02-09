@@ -1,9 +1,10 @@
 package resource;
 
 import dao.ResumeDao;
-import dao.UserDao;
+import dto.ResumeDto;
 import entity.ResumeEntity;
-import entity.UserEntity;
+import service.ResumeMapper;
+import service.ResumeService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,11 +18,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Path("/resume")
 public class ExampleResource {
-
-  private static Integer ADMIN_ID = 1;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -31,9 +31,11 @@ public class ExampleResource {
     }
 
     ResumeDao resumeDao = new ResumeDao();
+    ResumeMapper resumeMapper = new ResumeMapper();
     List<ResumeEntity> resumes = resumeDao.getResumes(limit);
+    List<ResumeDto> resumesDto = resumes.stream().map(resumeMapper::map).collect(Collectors.toList());
 
-    return Response.ok(resumes).build();
+    return Response.ok(resumesDto).build();
   }
 
   @GET
@@ -41,8 +43,9 @@ public class ExampleResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResumeById(@PathParam(value = "resumeId") Integer resumeId) {
     ResumeDao resumeDao = new ResumeDao();
+    ResumeMapper resumeMapper = new ResumeMapper();
     ResumeEntity resume = resumeDao.getResume(resumeId).orElseThrow(NotFoundException::new);
-    return Response.ok(resume).build();
+    return Response.ok(resumeMapper.map(resume)).build();
   }
 
   @POST
@@ -58,16 +61,8 @@ public class ExampleResource {
   @POST
   @Path(value = "/{resumeId}/archive")
   public Response archiveResume(@PathParam(value = "resumeId") Integer resumeId) {
-    ResumeDao resumeDao = new ResumeDao();
-    UserDao userDao = new UserDao();
-
-    ResumeEntity resume = resumeDao.getResume(resumeId).orElseThrow(NotFoundException::new);
-    UserEntity user = userDao.getUser(ADMIN_ID).orElseThrow(NotFoundException::new);
-
-    resume.archive(user);
-    user.setResumeArchivedCount(user.getResumeArchivedCount() + 1);
-    userDao.save(user);
-    resumeDao.save(resume);
+    ResumeService resumeService = new ResumeService();
+    resumeService.archiveResume(resumeId);
 
     return Response.ok().build();
   }

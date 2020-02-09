@@ -20,8 +20,8 @@ public class UserEntity {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "resume_archived_count")
-  private Integer resumeArchivedCount = 0;
+  @Column(name = "resume_archived_count", nullable = false)
+  private int resumeArchivedCount;
 
   public Integer getId() {
     return id;

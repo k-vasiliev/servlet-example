@@ -1,0 +1,13 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10.7-alpine
+    restart: always
+    #volumes:
+    #  - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: hh
+      POSTGRES_DB: hh
+      POSTGRES_USER: hh

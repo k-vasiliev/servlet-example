@@ -5,9 +5,11 @@ import dao.UserDao;
 import entity.ResumeEntity;
 import entity.UserEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.notifier.ResumeNotifier;
 
 import javax.ws.rs.NotFoundException;
+import java.util.List;
 
 @Service
 public class ResumeService {
@@ -24,9 +26,13 @@ public class ResumeService {
     this.resumeNotifier = resumeNotifier;
   }
 
-  public void archiveResume(Integer resumeId) {
-    // transaction problem!
+  @Transactional
+  public List<ResumeEntity> getResumes(Integer limit) {
+    return resumeDao.getResumes(limit);
+  }
 
+  @Transactional
+  public void archiveResume(Integer resumeId) {
     ResumeEntity resume = resumeDao.getResume(resumeId).orElseThrow(NotFoundException::new);
     UserEntity user = userDao.getUser(ADMIN_ID).orElseThrow(NotFoundException::new);
 

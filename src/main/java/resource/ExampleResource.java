@@ -41,7 +41,7 @@ public class ExampleResource {
     if (limit == null || limit < 1) {
       throw new IllegalArgumentException("Limit is not present");
     }
-    List<ResumeEntity> resumes = resumeDao.getResumes(limit);
+    List<ResumeEntity> resumes = resumeService.getResumes(limit);
     List<ResumeDto> resumesDto = resumes.stream().map(resumeMapper::map).collect(Collectors.toList());
 
     return Response.ok(resumesDto).build();

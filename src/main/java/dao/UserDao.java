@@ -18,14 +18,10 @@ public class UserDao {
 
   public Optional<UserEntity> getUser(Integer userId) {
     Session session = getSessionFactory().getCurrentSession();
-    try {
-      UserEntity user = session.createQuery("SELECT u From UserEntity u WHERE u.id = :id", UserEntity.class)
-          .setParameter("id", userId)
-          .getSingleResult();
-      return Optional.of(user);
-    } catch (RuntimeException e) {
-      return Optional.empty();
-    }
+    UserEntity user = session.createQuery("SELECT u From UserEntity u WHERE u.id = :id", UserEntity.class)
+        .setParameter("id", userId)
+        .getSingleResult();
+    return Optional.of(user);
   }
 
   public Integer save(UserEntity user) {

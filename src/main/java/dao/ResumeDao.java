@@ -27,16 +27,12 @@ public class ResumeDao {
 
   public Optional<ResumeEntity> getResume(Integer id) {
     Session session = getSessionFactory().getCurrentSession();
-    try {
-      ResumeEntity resume = session
-          .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
-          .setParameter("id", id)
-          .getSingleResult();
+    ResumeEntity resume = session
+        .createQuery("SELECT r FROM ResumeEntity r WHERE r.id = :id", ResumeEntity.class)
+        .setParameter("id", id)
+        .getSingleResult();
 
-      return Optional.of(resume);
-    } catch (RuntimeException e) {
-      return Optional.empty();
-    }
+    return Optional.of(resume);
   }
 
   public Integer save(ResumeEntity resumeEntity) {

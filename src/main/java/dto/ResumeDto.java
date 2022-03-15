@@ -3,10 +3,12 @@ package dto;
 public class ResumeDto {
 
   private Integer id;
-
   private String title;
-
+  private String role;
   private boolean isArchived;
+
+  public ResumeDto() {
+  }
 
   public ResumeDto(Integer id, String title, boolean isArchived) {
     this.id = id;
@@ -36,5 +38,13 @@ public class ResumeDto {
 
   public void setArchived(boolean archived) {
     isArchived = archived;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 }

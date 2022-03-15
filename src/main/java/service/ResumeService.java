@@ -2,6 +2,7 @@ package service;
 
 import dao.ResumeDao;
 import dao.UserDao;
+import dto.ResumeDto;
 import entity.ResumeEntity;
 import entity.UserEntity;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,19 @@ public class ResumeService {
     userDao.save(user);
     resumeDao.save(resume);
     resumeNotifier.notifyResumeArchived();
+  }
+
+  @Transactional
+  public Integer create(ResumeDto resumeDto) {
+    return resumeDao.save(new ResumeEntity(resumeDto.getTitle(), resumeDto.getRole()));
+  }
+
+  @Transactional
+  public void update(ResumeDto resumeDto, Integer resumeId) {
+    ResumeEntity resume = resumeDao.getResume(resumeId)
+        .orElseThrow(() -> new IllegalArgumentException("Resume not found with id " + resumeId));
+    resume.setRole(resumeDto.getRole());
+    resume.setTitle(resumeDto.getTitle());
+    resumeDao.save(resume);
   }
 }

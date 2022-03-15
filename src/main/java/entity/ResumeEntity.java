@@ -16,8 +16,9 @@ public class ResumeEntity {
   public ResumeEntity() {
   }
 
-  public ResumeEntity(String title) {
+  public ResumeEntity(String title, String role) {
     this.title = title;
+    this.role = role;
   }
 
   @Id
@@ -26,6 +27,9 @@ public class ResumeEntity {
 
   @Column(name = "title", nullable = false)
   private String title;
+
+  @Column(name = "role", nullable = false)
+  private String role;
 
   @OneToOne
   @JoinColumn(name = "archived_by")
@@ -64,6 +68,14 @@ public class ResumeEntity {
 
   public void setArchivedBy(UserEntity archivedBy) {
     this.archivedBy = archivedBy;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
   public void archive(UserEntity user) {

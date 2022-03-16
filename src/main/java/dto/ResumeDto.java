@@ -10,10 +10,11 @@ public class ResumeDto {
   public ResumeDto() {
   }
 
-  public ResumeDto(Integer id, String title, boolean isArchived) {
+  public ResumeDto(Integer id, String title, String role, boolean isArchived) {
     this.id = id;
     this.title = title;
     this.isArchived = isArchived;
+    this.role = role;
   }
 
   public Integer getId() {
